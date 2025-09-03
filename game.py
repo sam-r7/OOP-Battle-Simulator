@@ -7,10 +7,11 @@ def main():
     print("༼ ᓄºل͟º ༽ᓄ   ᕦ(ò_óˇ)ᕤ")
 
     # Create a hero
-    hero = Hero("Aragorn")
+    hero = Hero("Aragorn", 325, 50)
+    cooldown = 1
 
     # Create goblins ༼ ºل͟º ༽ ༼ ºل͟º ༽ ༼ ºل͟º ༽
-    goblins = [Goblin(f"Goblin {i+1}") for i in range(3)]
+    goblins = [Goblin(f"Goblin {i+1}") for i in range(7)]
 
     # Keep track of how many goblins were defeated
     defeated_goblins = 0
@@ -29,6 +30,24 @@ def main():
         if not target_goblin.is_alive():
             defeated_goblins += 1
             print(f"{target_goblin.name} has been defeated!")
+
+
+        if cooldown == 0 and any(goblin.is_alive() for goblin in goblins):
+            target_goblin = random.choice([goblin for goblin in goblins if goblin.is_alive()])
+            damage = hero.fireball()
+            print(f"Hero casts fireball on {target_goblin.name} for {damage} damage!")
+            target_goblin.take_damage(damage)
+            cooldown = 3
+
+            if not target_goblin.is_alive():
+                defeated_goblins += 1
+                print(f"{target_goblin.name} has been defeated!")
+
+        else:
+            cooldown -= 1
+
+
+
 
         # Goblins' turn to attack
         for goblin in goblins:
