@@ -9,7 +9,7 @@ class Orc(Enemy):
 
     def attack(self):
         mult = 1
-        if random.randint(0, 8) == 1:
+        if random.randint(0, 10) == 1:
             print("CRITICAL STRIKE")
             mult = 3
             return random.randint(self.attack_power-30, self.attack_power-20) * mult
@@ -17,7 +17,7 @@ class Orc(Enemy):
             return random.randint(self.attack_power-20, self.attack_power)
         
     def take_damage(self, damage):
-        armor = int(0.20*damage)
+        armor = int(0.15*damage)
         damage -= armor
         self.health -= damage
         if self.health < 0:
